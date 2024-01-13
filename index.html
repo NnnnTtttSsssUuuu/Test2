@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>コード実験</title>
+
+  <style>
+    p {
+      font-size: 200%;
+    }
+
+    table,
+    th,
+    td {
+      border-collapse: collapse;
+      border: 1px solid;
+    }
+  </style>
+
+</head>
+
+<body>
+  <h1>実験サイト</h1>
+
+  <textarea id="input"></textarea>
+
+  <button id="check">check!</button>
+  <button id="clear">clear</button>
+
+  <p id="output">
+
+    <!-- 表の表示実験
+  <table>
+    <tr>
+      <th>標準の字体</th>
+      <th>その説明</th>
+      <th>音訓（常用漢字は常用音訓、他は代表的な音訓）</th>
+      <th>web用異体字</th>
+      <th>その説明</th>
+    </tr>
+    <tr>
+      <td>亜</td>
+      <td>常用漢字</td>
+      <td>ア</td>
+      <td>亞</td>
+      <td>旧字体</td>
+    </tr>
+    <tr>
+      <td>哀</td>
+      <td>常用漢字</td>
+      <td>アイ、あわ-れ、あわ-れむ</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>挨</td>
+      <td>常用漢字</td>
+      <td>アイ</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>愛</td>
+      <td>常用漢字（小四）</td>
+      <td>アイ</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>曖</td>
+      <td>常用漢字</td>
+      <td>アイ</td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr>
+      <td>悪</td>
+      <td>常用漢字（小三）</td>
+      <td>アク、オ、わる-い</td>
+      <td>惡</td>
+      <td>旧字体</td>
+    </tr>
+  </table> -->
+
+  </p>
+
+  <!-- <p id="test">Thisi is a <strong>paragraph</strong> with <em>emphasis </em>.</p> -->
+
+  <script>
+    {
+
+      document.querySelector('#check').addEventListener('click', () => {
+        const inputText = document.querySelector('#input').value;
+        const outputText = document.querySelector('#output');
+        outputText.textContent = "";
+        const spanElement = document.createElement("span");
+        let hyojunkaText = "";
+        // spanElement.textContent = inputText;
+        // outputText.appendChild(spanElement);
+
+        const saloge1 = "𠮟卉𡈽  ";
+        const saloge2 = "\u{2F82C}"; //卉
+        const saloge3 = "\u{D844}\u{DE3D}";//𡈽
+        const itasele1 = "\u{845B}\u{E0100}";//葛󠄀
+        const itasele2 = "\u{845B}\u{DB40}\u{DD00}";//葛󠄀
+
+
+        outputText.insertAdjacentText("beforeend", saloge1);
+        outputText.insertAdjacentText("beforeend", "not叱");
+        outputText.insertAdjacentText("beforeend", saloge2);
+        outputText.insertAdjacentText("beforeend", saloge3);
+        outputText.insertAdjacentText("beforeend", itasele1);
+        outputText.insertAdjacentText("beforeend", itasele2);
+
+
+
+        // `${index}: ${score}`  //テンプレートリテラルで繋げる
+
+
+
+        // outputText.insertAdjacentText("beforeend", "　inputから");
+        // outputText.insertAdjacentText("beforeend", inputText);
+        // outputText.insertAdjacentText("beforeend", c + d + e);
+
+
+
+        for (let i = 0; i < inputText.length; i++) {
+          let c = inputText.substring(i, i + 1);
+          let d = inputText.substring(i + 1, i + 2);
+          let e = inputText.substring(i + 2, i + 3);
+
+          console.log(c.charCodeAt(0).toString(16));
+
+          hyojunkaText = hyojunkaText + c;
+        }
+
+        outputText.insertAdjacentText("beforeend", "以下、inputを再入力");
+        outputText.insertAdjacentText("beforeend", hyojunkaText);
+
+        // if (isKanji(c)) {
+        //   console.log("先頭の文字は漢字です",c);
+        //   spanElement.textContent = c+d;
+        //   outputText.appendChild(spanElement);
+        // }
+
+        // if (isItaijiSelector(d)) {
+        //   console.log("先頭の文字は異体字セレクタです",c);
+        //   spanElement.textContent = c+d+e;
+        //   outputText.appendChild(spanElement);
+        // }
+
+        console.log("文字数：", inputText.length);
+      });
+
+      document.querySelector('#clear').addEventListener('click', () => {
+        const outputText = document.querySelector('#output');
+        document.querySelector('textarea').value = '';
+        outputText.textContent = "";
+      });
+
+      function isKanji(c) {
+        // return /^[\u2E80-\u2EF3\u2F00-\u2FD5\u3400-\u9FFF\uD800-\uDFFF\uF900-\uFAEF]+$/.test(c);
+
+        // return /^[\u2E80-\u2EF3\u2F00-\u2FD5\u3400-\u9FFF\uD800-\uDFFF\uF900-\uFAEF\u20000-\u2FA1F\u30000-\u323AF\uE0100-\uE01EF]+$/.test(c);
+        // 上の行の\u****を\u{*****}の5桁で表記することを検討
+
+        // return /^[\u{2E80}-\u{2EF3}\u{2F00}-\u{2FD5}\u{3400}-\u{9FFF}\u{D800}-\u{DFFF}\u{F900}-\u{FAEF}]+$/u.test(c);
+        return /^[\u{2E80}-\u{2EF3}\u{2F00}-\u{2FD5}\u{3400}-\u{9FFF}\u{D800}-\u{DFFF}\u{F900}-\u{FAEF}\u{20000}-\u{2FA1F}\u{30000}-\u{323AF}\u{E0100}-\u{E01EF}]+$/u.test(c);
+      }
+
+      function isItaijiSelector(c) {
+        // return /^[\uDB40-\uDB55}]+$/.test(d);
+        return /^[\uFE00-\uFE0F\uDB40]+$/.test(c);
+        // 上の行はうまく行くのに、下の行は動かない。dで16bitの1文字だけを切り出すため。d+eを入れるとOKになる
+        // return /^[\u{E0100}-\u{E01EF}]+$/u.test(c);
+      }
+
+    }
+  </script>
+
+</body>
+
+</html>
